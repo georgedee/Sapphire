@@ -10,6 +10,15 @@ import framework.Pool;
 import framework.Input.TouchEvent;
 import framework.Pool.PoolObjectFactory;
 
+/**
+ * MultiTouchHandler.java
+ *
+ * A class to construct an object of MutliTouchHandler and methods to
+ * manipulate a MultiTouchHandler object. The MultiTouchHandler class is used
+ * to manage multiple touches on the device.
+ *
+ * @author Unknown
+ */
 public class MultiTouchHandler implements TouchHandler {
     private static final int MAX_TOUCHPOINTS = 10;
     
@@ -23,6 +32,13 @@ public class MultiTouchHandler implements TouchHandler {
     float scaleX;
     float scaleY;
 
+	/**
+	 * A constructor to create a MultiTouchHandler object.
+	 *
+	 * @param view		View variable of object
+	 * @param scaleX	x coordinate of object
+	 * @param scaleY	y coordinate of object
+	 */
     public MultiTouchHandler(View view, float scaleX, float scaleY) {
         PoolObjectFactory<TouchEvent> factory = new PoolObjectFactory<TouchEvent>() {
             @Override
@@ -37,6 +53,15 @@ public class MultiTouchHandler implements TouchHandler {
         this.scaleY = scaleY;
     }
 
+	/**
+	 * A method to perform a series of actions if the device screen is touched
+	 * in a certain way.
+	 *
+	 * @param v			the View of the application
+	 * @param event		the MotionEvent to take place
+	 * @return			returns false if an event is added to
+	 * 					touchEventsBuffer, otherwise, returns true
+	 */
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         synchronized (this) {
@@ -98,6 +123,14 @@ public class MultiTouchHandler implements TouchHandler {
         }
     }
 
+	/**
+	 * A method to determine if touch is down or not.
+	 *
+	 * @param pointer	int position of touch
+	 * @return			false if index of pointer is between 0 and
+	 * 					MAX_TOUCHPOINTS otherwise return the value of isTouched
+	 * 					array at index value.
+	 */
     @Override
     public boolean isTouchDown(int pointer) {
         synchronized (this) {
@@ -109,6 +142,13 @@ public class MultiTouchHandler implements TouchHandler {
         }
     }
 
+	/**
+	 * A method to get x coordinate of touch
+	 *
+	 * @param pointer	int position of touch
+	 * @return			0 if index of pointer is between 0 and MAX_TOUCHPOINTS,
+	 * 					otherwise return value of touchX array at index value.
+	 */
     @Override
     public int getTouchX(int pointer) {
         synchronized (this) {
@@ -120,6 +160,13 @@ public class MultiTouchHandler implements TouchHandler {
         }
     }
 
+	/**
+	 * A method to get y coordinate of touch
+	 *
+	 * @param pointer	int position of touch
+	 * @return			0 if index of pointer is between 0 and MAX_TOUCHPOINTS,
+	 * 					otherwise return value of touchY array at index value.
+	 */
     @Override
     public int getTouchY(int pointer) {
         synchronized (this) {
@@ -131,6 +178,11 @@ public class MultiTouchHandler implements TouchHandler {
         }
     }
 
+	/**
+	 * A method to get touch events from List array of type TouchEvent.
+	 *
+	 * @return	touch events from List<TouchEvent> array
+	 */
     @Override
     public List<TouchEvent> getTouchEvents() {
         synchronized (this) {
@@ -143,8 +195,13 @@ public class MultiTouchHandler implements TouchHandler {
             return touchEvents;
         }
     }
-    
-    // returns the index for a given pointerId or -1 if no index.
+
+	/**
+	 * A method to return the index of a given pointerId or -1 is no index.
+	 *
+	 * @param pointerId		int value corresponding to pointerId
+	 * @return				index of given pointerID or -1 if there is no index
+	 */
     private int getIndex(int pointerId) {
         for (int i = 0; i < MAX_TOUCHPOINTS; i++) {
             if (id[i] == pointerId) {

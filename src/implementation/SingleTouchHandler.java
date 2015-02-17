@@ -10,6 +10,15 @@ import framework.Pool;
 import framework.Input.TouchEvent;
 import framework.Pool.PoolObjectFactory;
 
+/**
+ * SingleTouchHandler.java
+ *
+ * A class to construct an object of SingleTouchHandler and methods to
+ * manipulate a SingleTouchHandler object. The SingleTouchHandler class is used
+ * to manage single touches on the device.
+ *
+ * @author Unknown
+ */
 public class SingleTouchHandler implements TouchHandler {
     boolean isTouched;
     int touchX;
@@ -19,7 +28,14 @@ public class SingleTouchHandler implements TouchHandler {
     List<TouchEvent> touchEventsBuffer = new ArrayList<TouchEvent>();
     float scaleX;
     float scaleY;
-    
+
+	/**
+	 * A constructor to construct a SingleTouchHandler object.
+	 *
+	 * @param view		View variable of object
+	 * @param scaleX	x coordinate of object
+	 * @param scaleY	y coordinate of object
+	 */
     public SingleTouchHandler(View view, float scaleX, float scaleY) {
         PoolObjectFactory<TouchEvent> factory = new PoolObjectFactory<TouchEvent>() {
             @Override
@@ -33,7 +49,16 @@ public class SingleTouchHandler implements TouchHandler {
         this.scaleX = scaleX;
         this.scaleY = scaleY;
     }
-    
+
+	/**
+	 * A method to perform a series of actions if the device screen is touched
+	 * in a certain way.
+	 *
+	 * @param v			the View of the application
+	 * @param event		the MotionEvent to take place
+	 * @return			returns true if an event is added to
+	 * 					touchEventsBuffer, otherwise, returns false
+	 */
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         synchronized(this) {
@@ -62,6 +87,13 @@ public class SingleTouchHandler implements TouchHandler {
         }
     }
 
+	/**
+	 * A method to determine if touch is down or not.
+	 *
+	 * @param pointer	int position of touch
+	 * @return			isTouched is pointer is equal to 0, otherwise, return
+	 * 					false.
+	 */
     @Override
     public boolean isTouchDown(int pointer) {
         synchronized(this) {
@@ -72,6 +104,12 @@ public class SingleTouchHandler implements TouchHandler {
         }
     }
 
+	/**
+	 * A method to get x coordinate of touch
+	 *
+	 * @param pointer	int position of touch
+	 * @return			value of touchX
+	 */
     @Override
     public int getTouchX(int pointer) {
         synchronized(this) {
@@ -79,6 +117,12 @@ public class SingleTouchHandler implements TouchHandler {
         }
     }
 
+	/**
+	 * A method to get y coordinate of touch
+	 *
+	 * @param pointer	int position of touch
+	 * @return			value of touchY
+	 */
     @Override
     public int getTouchY(int pointer) {
         synchronized(this) {
@@ -86,6 +130,11 @@ public class SingleTouchHandler implements TouchHandler {
         }
     }
 
+	/**
+	 * A method to get touch events from List array of type TouchEvent.
+	 *
+	 * @return	touch events from List<TouchEvent> array
+	 */
     @Override
     public List<TouchEvent> getTouchEvents() {
         synchronized(this) {     
